@@ -14,6 +14,7 @@ var EntropyLimit = 128
 // Waiting for entropy will time out after this amount of time. Setting to zero will never time out.
 var Timeout = time.Second * 10
 
+// Error when the system waits too long and gives up
 var ErrTimeout = errors.New("Timed out waiting for sufficient entropy")
 
 // Get the entropy estimate. Returns the estimated entropy in bits
