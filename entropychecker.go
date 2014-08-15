@@ -9,7 +9,7 @@ import (
 )
 
 // Set this to what you consider to be a 'safe' minimum entropy amount (in bits)
-var EntropyLimit = 128
+var MinimumEntropy = 128
 
 // Waiting for entropy will time out after this amount of time. Setting to zero will never time out.
 var Timeout = time.Second * 10
@@ -43,7 +43,7 @@ func WaitForEntropy() error {
 		switch {
 		case err != nil:
 			return err
-		case entropy > EntropyLimit:
+		case entropy > MinimumEntropy:
 			return nil
 		default:
 			select {

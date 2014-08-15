@@ -17,7 +17,7 @@ func TestEntropyChecker(t *testing.T) {
 		return
 	}
 
-	if entropy < EntropyLimit {
+	if entropy < MinimumEntropy {
 		t.Error("Insufficient entropy not properly detected")
 		return
 	}
