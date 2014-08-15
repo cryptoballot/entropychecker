@@ -2,8 +2,9 @@ package entropychecker
 
 import (
 	"errors"
-	"ioutil"
+	"io/ioutil"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -21,7 +22,7 @@ func GetEntropy() (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return strconv.Atoi(text)
+	return strconv.Atoi(strings.TrimSuffix(string(text), "\n"))
 }
 
 // Block until sufficient entropy is available
@@ -40,10 +41,8 @@ func WaitForEntropy() error {
 
 		switch {
 		case err != nil:
-			close(timeout)
 			return err
 		case entropy > EntropyLimit:
-			close(timeout)
 			return nil
 		default:
 			select {
