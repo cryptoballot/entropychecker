@@ -31,9 +31,9 @@ There are two configuration variables provided:
 ```go
 
 // By default we wait for 128 bits, but if you need more or less you can change it here
-entropychecker.MinimumEntropy = 64
+entropychecker.MinimumEntropy = 128
 
 // By default we will wait 10 seconds before timing out, but we can set it differently.
 // Set it to 0 to never time out
-entropychecker.Timeout = 20 * time.Second
+entropychecker.Timeout = 10 * time.Second
 ```
