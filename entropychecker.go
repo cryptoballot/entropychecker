@@ -3,6 +3,7 @@ package entropychecker
 import (
 	"errors"
 	"io/ioutil"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -15,10 +16,17 @@ var MinimumEntropy = 128
 var Timeout = time.Second * 10
 
 // Error when the system waits too long and gives up
-var ErrTimeout = errors.New("Timed out waiting for sufficient entropy")
+var ErrTimeout = errors.New("entropychecker: Timed out waiting for sufficient entropy.")
+
+// Error for invalid OS
+var ErrUnsupportedOS = errors.New("entropychecker: Unsupported OS. Only Linux is supported.")
 
 // Get the entropy estimate. Returns the estimated entropy in bits
 func GetEntropy() (int, error) {
+	if runtime.GOOS != "linux" {
+		return 0, ErrUnsupportedOS
+	}
+
 	text, err := ioutil.ReadFile("/proc/sys/kernel/random/entropy_avail")
 	if err != nil {
 		return 0, err
@@ -28,6 +36,10 @@ func GetEntropy() (int, error) {
 
 // Block until sufficient entropy is available
 func WaitForEntropy() error {
+	if runtime.GOOS != "linux" {
+		return ErrUnsupportedOS
+	}
+
 	// set up the timeout
 	timeout := make(chan bool, 1)
 	if Timeout != 0 {
