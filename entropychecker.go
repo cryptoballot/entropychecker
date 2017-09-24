@@ -45,10 +45,10 @@ func WaitForEntropy() error {
 	// set up the timeout
 	timeout := make(chan bool, 1)
 	if Timeout != 0 {
-		go func() {
-			time.Sleep(Timeout)
+		go func(timeoutDuration time.Duration) {
+			time.Sleep(timeoutDuration)
 			timeout <- true
-		}()
+		}(Timeout)
 	}
 
 	for {
