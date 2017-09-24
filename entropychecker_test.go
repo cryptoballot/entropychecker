@@ -2,6 +2,7 @@ package entropychecker
 
 import (
 	"testing"
+	"time"
 )
 
 func TestEntropyChecker(t *testing.T) {
@@ -27,5 +28,14 @@ func TestEntropyChecker(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 		return
+	}
+}
+
+func TestFailure(t *testing.T) {
+	Timeout = 200 * time.Millisecond
+	MinimumEntropy = 100000
+	err := WaitForEntropy()
+	if err == nil {
+		t.Error("Should get error when timeout waited too long")
 	}
 }
