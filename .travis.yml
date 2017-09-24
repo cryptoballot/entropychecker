@@ -2,7 +2,7 @@
 language: go
 
 script:
- - go test -race ./...
+ - go test -race -coverprofile=coverage.out -covermode=count ./... 
 
 notifications:
   email: false
