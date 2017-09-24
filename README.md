@@ -2,6 +2,7 @@ Entropy Checker
 ===============
 
 [![GoDoc](https://godoc.org/github.com/cryptoballot/entropychecker?status.svg)](https://godoc.org/github.com/cryptoballot/entropychecker)
+[![Go Report Card](https://goreportcard.com/badge/github.com/cryptoballot/entropychecker)](https://goreportcard.com/report/github.com/cryptoballot/entropychecker)
 
 Entropy Checker is a handy golang library for Linux that will ensure you have sufficient entropy available before doing important cryptographic operations.
 
