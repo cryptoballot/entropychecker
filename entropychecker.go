@@ -17,6 +17,9 @@ var MinimumEntropy = 128
 // Waiting for entropy will time out after this amount of time. Setting to zero will never time out.
 var Timeout = time.Second * 10
 
+// The only supported OS is linux at this time.
+var supportedOS = "linux"
+
 // ErrTimeout is for when the system waits too long and gives up
 var ErrTimeout = errors.New("entropychecker: Timed out waiting for sufficient entropy")
 
@@ -25,7 +28,7 @@ var ErrUnsupportedOS = errors.New("entropychecker: Unsupported OS. Only Linux is
 
 // GetEntropy gets the entropy estimate. Returns the estimated entropy in bits
 func GetEntropy() (int, error) {
-	if runtime.GOOS != "linux" {
+	if runtime.GOOS != supportedOS {
 		return 0, ErrUnsupportedOS
 	}
 
@@ -38,7 +41,7 @@ func GetEntropy() (int, error) {
 
 // WaitForEntropy blocks until sufficient entropy is available
 func WaitForEntropy() error {
-	if runtime.GOOS != "linux" {
+	if runtime.GOOS != supportedOS {
 		return ErrUnsupportedOS
 	}
 
