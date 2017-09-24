@@ -9,19 +9,21 @@ import (
 	"time"
 )
 
+// MinimumEntropy is the minimum amount of entropy that will be considered safe.
 // Set this to what you consider to be a 'safe' minimum entropy amount (in bits)
 var MinimumEntropy = 128
 
+// Timeout sets the maximum amount of time to wait for entropy.
 // Waiting for entropy will time out after this amount of time. Setting to zero will never time out.
 var Timeout = time.Second * 10
 
-// Error when the system waits too long and gives up
-var ErrTimeout = errors.New("entropychecker: Timed out waiting for sufficient entropy.")
+// ErrTimeout is for when the system waits too long and gives up
+var ErrTimeout = errors.New("entropychecker: Timed out waiting for sufficient entropy")
 
-// Error for invalid OS
-var ErrUnsupportedOS = errors.New("entropychecker: Unsupported OS. Only Linux is supported.")
+// ErrUnsupportedOS is for for an invalid OS that does not provide entropy estimates
+var ErrUnsupportedOS = errors.New("entropychecker: Unsupported OS. Only Linux is supported")
 
-// Get the entropy estimate. Returns the estimated entropy in bits
+// GetEntropy gets the entropy estimate. Returns the estimated entropy in bits
 func GetEntropy() (int, error) {
 	if runtime.GOOS != "linux" {
 		return 0, ErrUnsupportedOS
@@ -34,7 +36,7 @@ func GetEntropy() (int, error) {
 	return strconv.Atoi(strings.TrimSuffix(string(text), "\n"))
 }
 
-// Block until sufficient entropy is available
+// WaitForEntropy blocks until sufficient entropy is available
 func WaitForEntropy() error {
 	if runtime.GOOS != "linux" {
 		return ErrUnsupportedOS
