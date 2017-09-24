@@ -44,6 +44,10 @@ func TestFailure(t *testing.T) {
 	supportedOS = "unknown"
 	Timeout = 10 * time.Second
 	MinimumEntropy = 128
+	_, err = GetEntropy()
+	if err == nil {
+		t.Error("Should get error when using unknown OS")
+	}
 	err = WaitForEntropy()
 	if err == nil {
 		t.Error("Should get error when using unknown OS")
