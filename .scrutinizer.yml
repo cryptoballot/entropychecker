@@ -10,4 +10,8 @@ build:
                 override:
                     - go-scrutinizer-run
                     - govet-run
-                    
+                    -
+                        command: go test -coverprofile=cover.out
+                        coverage:
+                            file: 'cover.out'
+                            format: 'go-cc'
