@@ -1,15 +1,14 @@
 build:
-    dependencies:
-        before:
-            - 'source <(curl -fsSL https://raw.githubusercontent.com/phayes/go-scrutinize/master/install-golang)'
+    environment:
+        go: go1.9.2
 
     tests:
+        before:
+            - go get -u github.com/alecthomas/gometalinter
+            - gometalinter --install
         override:
             -
-                command: 'cd $PROJECTPATH && go-scrutinize'
-                coverage:
-                    file: 'coverage.xml'
-                    format: 'clover'
+                command: gometalinter ./... --checkstyle > result.xml
                 analysis:
-                    file: 'checkstyle_report.xml'
+                    file: 'result.xml'
                     format: 'general-checkstyle'
