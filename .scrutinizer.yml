@@ -1,14 +1,14 @@
+checks:
+    go: true
+
 build:
     environment:
         go: go1.9.2
-
-    tests:
-        before:
-            - go get -u github.com/alecthomas/gometalinter
-            - gometalinter --install
-        override:
-            -
-                command: gometalinter ./... --checkstyle > result.xml
-                analysis:
-                    file: 'result.xml'
-                    format: 'general-checkstyle'
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - go-scrutinizer-run
+                    - govet-run
+                    - golint-run
+                    
